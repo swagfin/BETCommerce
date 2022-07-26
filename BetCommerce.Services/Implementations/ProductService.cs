@@ -1,6 +1,7 @@
 ﻿using BetCommerce.DataAccess;
 using BetCommerce.Entity.Core;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,5 +49,9 @@ namespace BetCommerce.Services.Implementations
             }
         }
 
+        public async Task<IEnumerable<ProductStockCard>> GetStockHistoryAsync(int productId, DateTime dateFromUtc, DateTime dateToUtc)
+        {
+            return await _db.ProductStockCards.AsQueryable().Where(x => x.ProductId.Equals(productId) && x.TransactionDateUtc >= dateFromUtc && x.TransactionDateUtc <= dateToUtc).AsNoTracking().ToListAsync();
+        }
     }
 }
