@@ -1,4 +1,6 @@
-﻿using BetCommerce.Entity.Core;
+﻿using AutoMapper;
+using BetCommerce.Entity.Core;
+using BetCommerce.Entity.Core.Requests;
 using BetCommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +18,13 @@ namespace BetCommerce.API.Controllers.api
     {
         private readonly ILogger<ProductsController> _logger;
         private readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductsController(ILogger<ProductsController> logger, IProductService productService)
+        public ProductsController(ILogger<ProductsController> logger, IProductService productService, IMapper mapper)
         {
             this._logger = logger;
             this._productService = productService;
+            this._mapper = mapper;
         }
 
 
@@ -56,14 +60,15 @@ namespace BetCommerce.API.Controllers.api
 
 
         [HttpPost]
-        public async Task<Response<int>> Post([FromBody] Product product)
+        public async Task<Response<int>> Post([FromBody] ProductRequest product)
         {
             try
             {
                 if (!ModelState.IsValid)
                     throw new Exception(string.Join(Environment.NewLine, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage)));
-                await _productService.AddAsync(product);
-                return new Response<int>(product.ProductId);
+                Product model = _mapper.Map<Product>(product);
+                await _productService.AddAsync(model);
+                return new Response<int>(model.ProductId);
             }
             catch (Exception ex)
             {
