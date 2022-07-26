@@ -1,4 +1,6 @@
 using BetCommerce.DataAccess;
+using BetCommerce.Services;
+using BetCommerce.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,9 @@ namespace BetCommerce.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //Services
+            services.AddScoped<IProductService, ProductService>();
 
             //Skip serialize if reference loop is encountered
             services.AddControllers().AddNewtonsoftJson(options =>

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetCommerce.API", "BetComme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetCommerce.Entity.Core", "BetCommerce.Entity.Core\BetCommerce.Entity.Core.csproj", "{DE26D28D-5FBF-4A6B-ADB3-20709980934F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetCommerce.DataAccess", "BetCommerce.DataAccess\BetCommerce.DataAccess.csproj", "{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetCommerce.DataAccess", "BetCommerce.DataAccess\BetCommerce.DataAccess.csproj", "{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetCommerce.Services", "BetCommerce.Services\BetCommerce.Services.csproj", "{729E43EF-28F6-4EE3-9943-4C295D6D2468}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729E43EF-28F6-4EE3-9943-4C295D6D2468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729E43EF-28F6-4EE3-9943-4C295D6D2468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729E43EF-28F6-4EE3-9943-4C295D6D2468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729E43EF-28F6-4EE3-9943-4C295D6D2468}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BetCommerce.DataAccess\BetCommerce.DataAccess.csproj" />
+    <ProjectReference Include="..\BetCommerce.Entity.Core\BetCommerce.Entity.Core.csproj" />
+  </ItemGroup>
+
+</Project>

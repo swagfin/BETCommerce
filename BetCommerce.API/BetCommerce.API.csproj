@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\api\" />
     <Folder Include="wwwroot\Images\" />
     <Folder Include="wwwroot\Scripts\" />
   </ItemGroup>
@@ -27,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BetCommerce.DataAccess\BetCommerce.DataAccess.csproj" />
     <ProjectReference Include="..\BetCommerce.Entity.Core\BetCommerce.Entity.Core.csproj" />
+    <ProjectReference Include="..\BetCommerce.Services\BetCommerce.Services.csproj" />
   </ItemGroup>
 
 
