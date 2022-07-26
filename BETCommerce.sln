@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetCommerce.API", "BetCommerce.API\BetCommerce.API.csproj", "{A479C3EC-2637-4214-B59E-FDA12052A4DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetCommerce.API", "BetCommerce.API\BetCommerce.API.csproj", "{A479C3EC-2637-4214-B59E-FDA12052A4DA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE26D28D-5FBF-4A6B-ADB3-20709980934F} = {DE26D28D-5FBF-4A6B-ADB3-20709980934F}
+		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605} = {EA5B9CE9-306E-4D7B-B1F1-311DF484E605}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetCommerce.Entity.Core", "BetCommerce.Entity.Core\BetCommerce.Entity.Core.csproj", "{DE26D28D-5FBF-4A6B-ADB3-20709980934F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetCommerce.Entity.Core", "BetCommerce.Entity.Core\BetCommerce.Entity.Core.csproj", "{DE26D28D-5FBF-4A6B-ADB3-20709980934F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetCommerce.DataAccess", "BetCommerce.DataAccess\BetCommerce.DataAccess.csproj", "{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,10 @@ Global
 		{DE26D28D-5FBF-4A6B-ADB3-20709980934F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE26D28D-5FBF-4A6B-ADB3-20709980934F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE26D28D-5FBF-4A6B-ADB3-20709980934F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5B9CE9-306E-4D7B-B1F1-311DF484E605}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
