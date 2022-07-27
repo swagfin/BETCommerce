@@ -51,15 +51,23 @@ namespace BetCommerce.API
                  options.RequireHttpsMetadata = false;
                  options.TokenValidationParameters = new TokenValidationParameters
                  {
-                     ValidateIssuer = true,
-                     ValidateAudience = true,
                      ValidIssuer = Configuration.GetValue<string>("JWTAuth:Issuer"),
                      ValidAudience = Configuration.GetValue<string>("JWTAuth:Audience"),
                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("JWTAuth:EncryptKey"))),
-                     ClockSkew = TimeSpan.FromMinutes(5)
+                     ClockSkew = TimeSpan.Zero
                  };
              });
 
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.SetIsOriginAllowed((x) => true);
+                    builder.AllowCredentials();
+                });
+            });
 
             // Auto Mapper Configurations
             MapperConfiguration mapperConfig = new MapperConfiguration(mc =>
@@ -69,11 +77,8 @@ namespace BetCommerce.API
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            //Skip serialize if reference loop is encountered
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
 
+            //Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BET Commerce API", Version = "v1" });
@@ -95,15 +100,28 @@ namespace BetCommerce.API
                             {
                                 Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
-                            },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
+                            }
                         },
                         new List<string>()
                     }
                 });
             });
+
+
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.SetIsOriginAllowed((x) => true);
+                    builder.AllowCredentials();
+                });
+            });
+            //Skip serialize if reference loop is encountered
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,8 +136,9 @@ namespace BetCommerce.API
 
             app.UseHttpsRedirection();
 
+            // app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 
