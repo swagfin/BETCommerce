@@ -1,6 +1,8 @@
 ﻿using BetCommerce.DataAccess;
 using BetCommerce.Entity.Core;
+using BetCommerce.Entity.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +19,11 @@ namespace BetCommerce.Services.Implementations
         }
         public async Task AddAsync(UserAccount userAccount)
         {
+            //Change Password to MDF
+            string existEmail = await _db.UserAccounts.AsQueryable().Select(x => x.EmailAddress).AsNoTracking().FirstOrDefaultAsync(x => x.ToLower().Equals(userAccount.EmailAddress.ToLower()));
+            if (!string.IsNullOrWhiteSpace(existEmail))
+                throw new Exception($"The Email Address: {userAccount.EmailAddress} is already registered");
+            userAccount.PasswordHash = userAccount.PasswordHash.ToMD5String();
             await _db.UserAccounts.AddAsync(userAccount);
             await _db.SaveChangesAsync();
         }
@@ -46,6 +53,33 @@ namespace BetCommerce.Services.Implementations
                 _db.UserAccounts.Remove(record);
                 await _db.SaveChangesAsync();
             }
+        }
+
+        public async Task<UserAccount> SignInAsync(string emailAddress, string password)
+        {
+            string encryptedHash = password.ToMD5String();
+            UserAccount user = await _db.UserAccounts.AsQueryable().FirstOrDefaultAsync(x => x.EmailAddress.Equals(emailAddress));
+            if (user == null)
+                throw new Exception($"No registered account with the provided email address: {emailAddress} , re-check inputs then try again.");
+            else if (!user.PasswordHash.Equals(encryptedHash))
+            {
+                user.InvalidLogins += 1;
+                int attemptsLeft = 6 - user.InvalidLogins;
+                if (attemptsLeft < 1)
+                {
+                    attemptsLeft = 0;
+                    user.IsActive = false;
+                    throw new Exception($"Invalid Password Provided, this Account has now been SUSPENDED because of too many Wrong Attempts. Please Contact your Administrator to Reset your Password. You can also Try Resetting your Password.");
+                }
+                throw new Exception($"Invalid Password Provided, Enter valid Password. Attempts Left ({attemptsLeft}).");
+            }
+            else
+            {
+                user.InvalidLogins = 0;
+                user.LastLogin = DateTime.UtcNow;
+            }
+            await _db.SaveChangesAsync();
+            return user;
         }
     }
 }

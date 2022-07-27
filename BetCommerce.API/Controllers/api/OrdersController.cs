@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace BetCommerce.API.Controllers.api
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
@@ -28,7 +29,7 @@ namespace BetCommerce.API.Controllers.api
         }
 
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<Response<IEnumerable<Order>>> GetAsync(int page = -1, int size = -1)
         {
             try
@@ -42,7 +43,9 @@ namespace BetCommerce.API.Controllers.api
                 return new Response<IEnumerable<Order>>(null, false, ex.Message);
             }
         }
-        [HttpGet("GetOrdersByUserId/{userId}"), AllowAnonymous]
+
+        [Authorize]
+        [HttpGet("GetOrdersByUserId/{userId}")]
         public async Task<Response<IEnumerable<Order>>> GetOrdersByUserIdAsync(string userId, int page = -1, int size = -1)
         {
             try
@@ -56,8 +59,6 @@ namespace BetCommerce.API.Controllers.api
                 return new Response<IEnumerable<Order>>(null, false, ex.Message);
             }
         }
-
-
 
         [HttpPost]
         public async Task<Response<int>> PostAsync([FromBody] OrderRequest orderRequest)
@@ -78,7 +79,7 @@ namespace BetCommerce.API.Controllers.api
         }
 
 
-        [HttpGet("{id}"), AllowAnonymous]
+        [HttpGet("{id}")]
         public async Task<Response<Order>> GetAsync(int id)
         {
             try
