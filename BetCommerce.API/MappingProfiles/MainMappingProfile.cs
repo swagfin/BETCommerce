@@ -2,6 +2,7 @@
 using AutoMapper;
 using BetCommerce.Entity.Core;
 using BetCommerce.Entity.Core.Requests;
+using BetCommerce.Entity.Core.Responses;
 
 namespace BetCommerce.API.MappingProfiles
 {
@@ -12,6 +13,8 @@ namespace BetCommerce.API.MappingProfiles
             CreateMap<ProductRequest, Product>();
             CreateMap<OrderRequest, Order>();
             CreateMap<OrderItemRequest, OrderItem>();
+            CreateMap<UserAccount, UserIdentityResponse>();
+            CreateMap<UserIdentityRequest, UserAccount>();
         }
     }
 }

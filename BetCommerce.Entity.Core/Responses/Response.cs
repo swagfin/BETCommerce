@@ -19,7 +19,7 @@ namespace BetCommerce.Entity.Core
         public string ResponseBody { get; set; }
         public string CopyRight
         {
-            get { return "BET Software © " + DateTime.Now.ToString("yyyy"); }
+            get { return "BET Commerce © " + DateTime.Now.ToString("yyyy"); }
         }
     }
 }

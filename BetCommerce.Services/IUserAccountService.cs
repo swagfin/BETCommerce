@@ -11,5 +11,6 @@ namespace BetCommerce.Services
         Task<UserAccount> GetAsync(string userAccountId);
         Task UpdateAsync(UserAccount userAccount);
         Task RemoveAsync(string userAccountId);
+        Task<UserAccount> SignInAsync(string emailAddress, string password);
     }
 }
