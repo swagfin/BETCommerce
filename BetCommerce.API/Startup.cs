@@ -28,7 +28,10 @@ namespace BetCommerce.API
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //Services
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUserAccountService, UserAccountService>();
 
 
             // Auto Mapper Configurations

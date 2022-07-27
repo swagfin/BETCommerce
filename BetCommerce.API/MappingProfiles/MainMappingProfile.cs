@@ -10,6 +10,8 @@ namespace BetCommerce.API.MappingProfiles
         public MainMappingProfile()
         {
             CreateMap<ProductRequest, Product>();
+            CreateMap<OrderRequest, Order>();
+            CreateMap<OrderItemRequest, OrderItem>();
         }
     }
 }

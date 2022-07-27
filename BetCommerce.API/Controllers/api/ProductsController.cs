@@ -29,11 +29,11 @@ namespace BetCommerce.API.Controllers.api
 
 
         [HttpGet, AllowAnonymous]
-        public async Task<Response<IEnumerable<Product>>> Get(int page = -1, int size = -1)
+        public async Task<Response<IEnumerable<Product>>> GetAsync(int page = -1, int size = -1)
         {
             try
             {
-                IEnumerable<Product> dataFeedback = dataFeedback = await _productService.GetAllAsync(page); //Page Size Implementation
+                IEnumerable<Product> dataFeedback = dataFeedback = await _productService.GetAllAsync(page, size); //Page Size Implementation
                 return new Response<IEnumerable<Product>>(dataFeedback);
             }
             catch (Exception ex)
@@ -43,8 +43,23 @@ namespace BetCommerce.API.Controllers.api
             }
         }
 
+        [HttpGet("GetStockHistory/{itemId}"), AllowAnonymous]
+        public async Task<Response<IEnumerable<ProductStockCard>>> GetStockHistoryAsync(int itemId, DateRangeRequest dateRangeRequest)
+        {
+            try
+            {
+                IEnumerable<ProductStockCard> dataFeedback = dataFeedback = await _productService.GetStockHistoryAsync(itemId, dateRangeRequest.DateFrom, dateRangeRequest.DateTo); //Page Size Implementation
+                return new Response<IEnumerable<ProductStockCard>>(dataFeedback);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new Response<IEnumerable<ProductStockCard>>(null, false, ex.Message);
+            }
+        }
+
         [HttpGet("{id}"), AllowAnonymous]
-        public async Task<Response<Product>> Get(int id)
+        public async Task<Response<Product>> GetAsync(int id)
         {
             try
             {
@@ -60,7 +75,7 @@ namespace BetCommerce.API.Controllers.api
 
 
         [HttpPost]
-        public async Task<Response<int>> Post([FromBody] ProductRequest product)
+        public async Task<Response<int>> PostAsync([FromBody] ProductRequest product)
         {
             try
             {
@@ -79,7 +94,7 @@ namespace BetCommerce.API.Controllers.api
 
 
         [HttpPut("{id}")]
-        public async Task<Response<bool>> Put(int id, [FromBody] Product product)
+        public async Task<Response<bool>> PutAsync(int id, [FromBody] Product product)
         {
             try
             {
@@ -98,7 +113,7 @@ namespace BetCommerce.API.Controllers.api
 
 
         [HttpDelete("{id}")]
-        public async Task<Response<bool>> Delete(int id)
+        public async Task<Response<bool>> DeleteAsync(int id)
         {
             try
             {
