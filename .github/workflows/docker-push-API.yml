@@ -2,7 +2,7 @@ name: Docker Publish For BetCommerce.API
 
 on:
   workflow_run:
-    workflows: [.NET Ensure Restore and Build]
+    workflows: [.NET Build on Master Commits]
     types:
       - completed
     

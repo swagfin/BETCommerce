@@ -1,13 +1,11 @@
-name: .NET Ensure Restore and Build
+name: .NET Build Master on Pull Requests
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
+  build_master_pull_requests:
 
     runs-on: ubuntu-latest
 
