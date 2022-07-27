@@ -1,4 +1,8 @@
+using AutoMapper;
+using BetCommerce.API.MappingProfiles;
 using BetCommerce.DataAccess;
+using BetCommerce.Services;
+using BetCommerce.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,10 +27,26 @@ namespace BetCommerce.API
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //Services
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUserAccountService, UserAccountService>();
+
+
+            // Auto Mapper Configurations
+            MapperConfiguration mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MainMappingProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             //Skip serialize if reference loop is encountered
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BET Commerce API", Version = "v1" });
