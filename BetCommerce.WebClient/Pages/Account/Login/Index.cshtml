@@ -1,0 +1,33 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Account.Login.IndexModel
+@{
+}
+<div class="ui text container" style="margin-top:20px;margin-bottom:80px">
+
+    <div class="ui attached message">
+        <div class="header">Sign in!</div>
+        <p>Sign to proceed</p>
+    </div>
+
+    <form class="ui form attached fluid segment" onsubmit="return validate(this)" id="loginform">
+        <div class="field" id="userbox">
+            <label id="userl">Username</label>
+            <input placeholder="Enter your Username" name="username" id="username" type="text" autocomplete="off" autofocus="" required="">
+        </div>
+        <div class="field" id="pswbox">
+            <label id="passl">Password</label>
+            <input type="password" placeholder="Enter your password" id="password" name="password" required="">
+        </div>
+        <div class="inline field">
+            <div class="ui checkbox"><input type="checkbox" id="rememberPass"><label>Remember me</label></div>
+        </div>
+        <div style="text-align:center">
+            <button class="ui labeled icon button pink" id="submitbtn"><i class="sign in icon"></i>Login</button>
+        </div>
+    </form>
+
+    <div class="ui bottom attached orange message">
+        <i class="icon help"></i> Don't have an account? <a href="../register/">Sign up</a>.<br>
+        <i class="icon help"></i> Forgotten password? <a href="reset">Password recovery</a>.
+    </div>
+</div>

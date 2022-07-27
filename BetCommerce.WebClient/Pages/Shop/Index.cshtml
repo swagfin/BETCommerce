@@ -1,0 +1,58 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Shop.IndexModel
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<div class="ui message small icon">
+    <i class="info icon"></i>
+    <div class="content">
+        Welcome to  <a>BET Commerce</a>. is so far the most creative way to shop anything you want
+        .This website is currently under development
+    </div>
+</div>
+<div class="ui divider"></div>
+<section class="ui two column grid">
+    <div class="three wide column">
+        <div class="ui vertical inverted red menu fluid" style="border-radius:0;">
+            <a class="active item"><i class="home icon"></i>Browse Categories</a>
+            <a class="active item" href='/shop'><i class="cart icon"></i>Others</a>
+            <a class="active item" href='/shop'><i class="cart icon"></i>T-Shirts</a>
+        </div>
+    </div>
+
+    <div class="thirteen wide column">
+        <LoginDisplay />
+        <div class="ui container segment ">
+
+
+            <div class="ui four doubling cards">
+
+                <div class="card">
+                    <div class="image">
+                        <img style="max-height:140px" src="/Images/jacket.png">
+                    </div>
+                    <div class="content">
+                        <div class="header">Jacket Jacket</div>
+                        <div class="description">
+                            <span class="ui star rating" data-rating="3"></span><br />
+                            <span>Price <span>@string.Format("{0:N0}", 5000)</span></span>
+                        </div>
+                    </div>
+                    <div class="ui red attached button">
+                        <i class="cart icon"></i>
+                        Add Cart
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+@section Scripts{
+    <script>
+        $('.ui.rating').rating();
+    </script>
+}
