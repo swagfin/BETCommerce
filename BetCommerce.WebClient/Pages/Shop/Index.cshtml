@@ -63,7 +63,7 @@
                                         <span class="meta">@string.Format("{0:N0} remaining", product.CurrentQuantity)</span>
                                     </div>
                                 </div>
-                                <div class="ui red attached button">
+                                <div class="ui red attached button" onclick="addItemToCart(@product.ProductId,this)">
                                     <i class="cart icon"></i>
                                     Add Cart
                                 </div>
@@ -81,3 +81,27 @@
     </div>
 
 </section>
+@section Scripts{
+
+    <script type="text/javascript">
+        function addItemToCart(itemId, element) {
+            $(element).addClass("loading");
+            $.ajax({
+                type: "GET",
+                url: "/cart/additem/" + itemId,
+                success: function (msg) {
+                    toastr.success(msg);
+                    $(element).removeClass("loading");
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                    toastr.error("An rrror Occurred while adding item to cart : Error: " + error);
+                },
+                complete: function (data) {
+                    $(element).removeClass("loading");
+                }
+
+            });
+        }
+    </script>
+}

@@ -1,7 +1,12 @@
-﻿<div class="ui menu inverted  red fluid" style="border-radius:0;">
+﻿@using BetCommerce.WebClient.Services
+@inject IShoppingCartService cartService
+<div class="ui menu inverted  red fluid" style="border-radius:0;">
     <a class="active item" href='/'><i class="home icon"></i>Home</a>
     <a class="active item" href='/shop'><i class="cart icon"></i>Shopping</a>
-    <a class="active item" href='/shop/Checkout'><i class="cart icon"></i>Cart (2)</a>
+    <a class="active item" href='/cart/'>
+        <i class="cart icon"></i>
+        2
+    </a>
 
     <div class="right item">
         @{

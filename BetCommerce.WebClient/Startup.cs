@@ -24,6 +24,7 @@ namespace BetCommerce.WebClient
         {
             services.Configure<WebClientOptions>(Configuration.GetSection(nameof(WebClientOptions)));
             services.AddTransient<IHttpService, HttpService>();
+            services.AddSingleton<IShoppingCartService, ShoppingCartInMemoryService>();
 
             //Required 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
