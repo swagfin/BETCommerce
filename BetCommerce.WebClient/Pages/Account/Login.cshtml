@@ -1,0 +1,38 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Account.Login.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="ui text container" style="margin-top:20px;margin-bottom:80px">
+
+    @{
+        if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
+        {
+            <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
+        }
+    }
+    <div class="ui attached tiny message">
+        <div class="header">Sign in!</div>
+    </div>
+    <form class="ui small loading form attached fluid segment" method="post" role="form">
+        <div class="field" id="userbox">
+            <label id="userl">Email Address</label>
+            <input placeholder="Enter your Email Address" asp-for="signInRequest.EmailAddress" autocomplete="off" autofocus="" required="">
+        </div>
+        <div class="field" id="pswbox">
+            <label id="passl">Password</label>
+            <input type="password" placeholder="xxxxxxxxx" asp-for="signInRequest.Password" autocomplete="off" required="">
+        </div>
+        <div class="inline field">
+            <div class="ui checkbox"><input type="checkbox" id="rememberPass"><label>Remember me</label></div>
+        </div>
+        <div style="text-align:center">
+            <button class="ui labeled icon button pink" id="submitbtn"><i class="sign in icon"></i>Login</button>
+        </div>
+    </form>
+
+    <div class="ui bottom attached orange tiny message">
+        <i class="icon help"></i> Don't have an account? <a href="/account/register/">Register Account</a>.<br>
+        <i class="icon help"></i> Forgotten password? <a href="reset">Password recovery</a>.
+    </div>
+</div>

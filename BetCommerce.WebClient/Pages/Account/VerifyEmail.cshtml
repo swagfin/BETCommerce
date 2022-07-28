@@ -1,0 +1,33 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Account.VerifyEmailModel
+@{
+    ViewData["Title"] = "Verify Email";
+}
+
+<div class="ui text container" style="margin-top:20px;margin-bottom:80px" id="recoveryform">
+
+    <h1>Email Verification</h1>
+    @{
+        if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
+        {
+            <div class="ui tiny warning message"><b>@(Model.ErrorResponse)</b></div>
+        }
+    }
+    <div class="ui attached message success">
+        @(Model.InfoMessage)
+    </div>
+
+    <form class="ui form attached fluid loading segment" method="POST">
+        <div class="field" id="emailbox">
+            <label id="emaillabel">Verification Code</label>
+            <input placeholder="xxxxxx" asp-for="VerificationRequest.Code" autocomplete="off" autofocus required>
+        </div>
+        <div style="text-align:center">
+            <button class="ui labeled icon button green" id="submitbtn"><i class="send icon"></i>Validate</button>
+        </div>
+    </form>
+
+    <div class="ui bottom attached orange message">
+        <i class="icon help"></i><b>Did not get Code? </b> <a class="ui label" href="/account/verifyEmail/?resend-code=authcode">Resend Code</a>
+    </div>
+</div>

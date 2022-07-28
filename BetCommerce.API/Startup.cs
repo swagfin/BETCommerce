@@ -1,11 +1,14 @@
 using AutoMapper;
+using BetCommerce.API.Extensions;
 using BetCommerce.API.MappingProfiles;
+using BetCommerce.API.Services;
 using BetCommerce.DataAccess;
 using BetCommerce.Services;
 using BetCommerce.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,12 +35,17 @@ namespace BetCommerce.API
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //Configs
+            services.Configure<ApiConfigOptions>(Configuration.GetSection(nameof(ApiConfigOptions)));
             //Services
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUserAccountService, UserAccountService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //Accessing server Url and Schemes etc
 
+            //Process Initializables
+            services.AddSingleton<EmailDispatcherBackgroundJob>().AddSingleton<IProcessorInitializable>(svc => svc.GetRequiredService<EmailDispatcherBackgroundJob>());
 
             //Auth
             services.AddAuthentication(options =>
@@ -118,15 +126,17 @@ namespace BetCommerce.API
                     builder.AllowCredentials();
                 });
             });
-            //Skip serialize if reference loop is encountered
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            //Use Background Jobs
+            app.UseProcessorInitializables();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

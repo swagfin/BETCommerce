@@ -1,0 +1,35 @@
+name: Docker Publish For BetCommerce.WebClient
+
+on:
+  workflow_run:
+    workflows: [.NET Build on Master Commits]
+    types:
+      - completed
+    
+jobs:
+
+  publish_linux_image:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
+    - name: Build the Docker Image
+      run: docker build . --file BetCommerce.WebClient/Dockerfile --tag ${{secrets.DOCKER_USER}}/betcommerceapi:latest
+    - name: Docker Push
+      run: docker push ${{secrets.DOCKER_USER}}/betcommercewebclient:latest
+      
+  publish_windows_image:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
+    - name: Build the Docker Image
+      run: docker build . --file BetCommerce.WebClient/Dockerfile --tag ${{secrets.DOCKER_USER}}/betcommerceapi:latest-windows
+    - name: Docker Push
+      run: docker push ${{secrets.DOCKER_USER}}/betcommercewebclient:latest-windows

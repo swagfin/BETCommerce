@@ -1,0 +1,57 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Cart.IndexModel
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+<div class="ui  container">
+    <div class="ui horizontal divider"><i class="shop icon"></i> CART</div>
+    @{
+        if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
+        {
+            <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
+        }
+    }
+
+    @{
+        if (Model.CartItems == null || Model.CartItems.Count == 0)
+        {
+            <div class="ui message warning icon">
+                <i class="clone outline icon"></i>
+                <div class="content">
+                    <b>It looks like you shopping cart is Empty, how about <a href="~/shop"> Start Shopping</a></b>
+                    <p class="meta" align="center">
+                        <a class="ui primary button" href="~/shop"><i class="cart icon"></i>Start Shopping</a>
+                    </p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="ui attached tiny success message">
+                The following items are ready for you to checkout
+            </div>
+            <div class="ui small form" method="GET">
+                <table id="data_table" class="ui celled  selectable attached table">
+
+                    <thead><tr><th>No</th><th>Product</th><th>Qty</th><th>Rate</th><th>Total Price</th><th>Remove</th></tr></thead>
+                    <tbody>
+                        @{
+                            int startAt = 0;
+                            foreach (var record in Model.CartItems)
+                            {
+                                startAt++;
+                                <tr><td>@string.Format("{0:N0}", startAt)</td><td>@record.ProductName</td><td>@string.Format("{0:N0}", record.Quantity)</td><td>@string.Format("{0:N2}", record.Rate)</td><td>@string.Format("{0:N2}", record.TotalCost)</td><td> <div title="Remove Item" class="ui small negative basic icon button" onclick="removeItemFromCart(@record.ProductId, this);"><i class="close icon"></i></div></td></tr>
+                            }
+                        }
+                        <tr><td colspan="4"><p align="center"><a style="font-weight:bold"><i class="money icon"></i>TOTAL AMOUNT: </a></p></td><td><h4>Ksh. @string.Format("{0:N2}", Model.TotalAmount)</h4></td><td><a href="/cart/checkout/" class="ui green right labeled icon  button">Check Out<i class="cart icon"></i></a></td> </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ui bottom attached warning tiny message">End of All Shopping cart Items</div>
+
+        }
+    }
+
+    <div class="ui horizontal divider"><i class="shop icon"></i> CART</div>
+</div>
