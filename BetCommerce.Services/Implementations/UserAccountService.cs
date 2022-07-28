@@ -65,10 +65,12 @@ namespace BetCommerce.Services.Implementations
             {
                 user.InvalidLogins += 1;
                 int attemptsLeft = 6 - user.InvalidLogins;
+                await _db.SaveChangesAsync();
                 if (attemptsLeft < 1)
                 {
                     attemptsLeft = 0;
                     user.IsActive = false;
+                    await _db.SaveChangesAsync();
                     throw new Exception($"Invalid Password Provided, this Account has now been SUSPENDED because of too many Wrong Attempts. Please Contact your Administrator to Reset your Password. You can also Try Resetting your Password.");
                 }
                 throw new Exception($"Invalid Password Provided, Enter valid Password. Attempts Left ({attemptsLeft}).");
@@ -77,8 +79,8 @@ namespace BetCommerce.Services.Implementations
             {
                 user.InvalidLogins = 0;
                 user.LastLogin = DateTime.UtcNow;
+                await _db.SaveChangesAsync();
             }
-            await _db.SaveChangesAsync();
             return user;
         }
     }

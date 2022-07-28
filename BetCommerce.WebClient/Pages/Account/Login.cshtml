@@ -1,6 +1,7 @@
 ﻿@page
-@model BetCommerce.WebClient.Pages.Account.Login.IndexModel
+@model BetCommerce.WebClient.Pages.Account.Login.LoginModel
 @{
+    ViewData["Title"] = "Login";
 }
 <div class="ui text container" style="margin-top:20px;margin-bottom:80px">
 
@@ -8,15 +9,21 @@
         <div class="header">Sign in!</div>
         <p>Sign to proceed</p>
     </div>
+    @{
+        if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
+        {
+            <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
+        }
+    }
 
-    <form class="ui form attached fluid segment" onsubmit="return validate(this)" id="loginform">
+    <form class="ui form attached fluid segment" method="post" role="form">
         <div class="field" id="userbox">
-            <label id="userl">Username</label>
-            <input placeholder="Enter your Username" name="username" id="username" type="text" autocomplete="off" autofocus="" required="">
+            <label id="userl">Email Address</label>
+            <input placeholder="Enter your Email Address" asp-for="signInRequest.EmailAddress" autocomplete="off" autofocus="" required="">
         </div>
         <div class="field" id="pswbox">
             <label id="passl">Password</label>
-            <input type="password" placeholder="Enter your password" id="password" name="password" required="">
+            <input type="password" placeholder="xxxxxxxxx" asp-for="signInRequest.Password" autocomplete="off" required="">
         </div>
         <div class="inline field">
             <div class="ui checkbox"><input type="checkbox" id="rememberPass"><label>Remember me</label></div>

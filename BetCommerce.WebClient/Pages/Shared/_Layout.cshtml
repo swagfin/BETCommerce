@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="~/css/semantic.min.css" />
     <script src="~/js/semantic.min.js"></script>
     <link href="css/site.css" rel="stylesheet" />
-    <base href="~/" />
 </head>
 <body style="background:#f7f7f7">
     @await Html.PartialAsync("_NavView")
@@ -17,5 +16,9 @@
         @RenderBody()
     </div>
     @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        $('.ui.rating').rating();
+        $('.ui.dropdown').dropdown();
+    </script>
 </body>
 </html>
