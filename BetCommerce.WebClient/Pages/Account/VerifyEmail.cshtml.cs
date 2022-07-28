@@ -4,6 +4,7 @@ using BetCommerce.Entity.Core.Responses;
 using BetCommerce.WebClient.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
 namespace BetCommerce.WebClient.Pages.Account
 {
     public class VerifyEmailModel : PageModel
@@ -29,12 +29,20 @@ namespace BetCommerce.WebClient.Pages.Account
             this._logger = logger;
         }
         public string ErrorResponse { get; set; } = null;
+        public string InfoMessage { get; set; } = "Enter the verification Code sent to your Email Address";
         public async Task<IActionResult> OnGetAsync()
         {
+            if (!User.Identity.IsAuthenticated || User.IsEmailConfirmed())
+                return Redirect("/");
+            //Proceed
             if (Request.Query.ContainsKey("resend-code"))
             {
                 await ResendVerificationCodeAsync();
-                return Redirect("/account/verifyEmail");
+                return Redirect("/account/verifyEmail?email-resent-success");
+            }
+            else if (Request.Query.ContainsKey("email-resent-success"))
+            {
+                InfoMessage = $"We have resent the verification code to your registered Email Address ({User.Identity.Name})";
             }
             return Page();
         }
@@ -43,6 +51,8 @@ namespace BetCommerce.WebClient.Pages.Account
         {
             try
             {
+                if (!User.Identity.IsAuthenticated || User.IsEmailConfirmed())
+                    return Redirect("/");
                 ErrorResponse = null;
                 if (string.IsNullOrWhiteSpace(VerificationRequest.Code))
                     throw new Exception("Email/Username is required to Login");

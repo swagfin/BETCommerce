@@ -6,15 +6,15 @@
 
 <div class="ui text container" style="margin-top:20px;margin-bottom:80px" id="recoveryform">
 
-    <h1>Account Verification</h1>
+    <h1>Email Verification</h1>
     @{
         if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
         {
-            <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
+            <div class="ui tiny warning message"><b>@(Model.ErrorResponse)</b></div>
         }
     }
     <div class="ui attached message success">
-        You have not yet verified your account yet, enter the verification code we sent to you via Email
+        @(Model.InfoMessage)
     </div>
 
     <form class="ui form attached fluid loading segment" method="POST">

@@ -15,6 +15,10 @@
                     <i class="cart icon"></i><span><b>@User.Identity.Name</b></span>
                     <div class="menu" tabindex="-1">
                         <div class="item" onclick="location.href='/'">My Account</div>
+                        @if (!User.IsEmailConfirmed())
+                        {
+                            <div class="item" onclick="location.href='/account/verifyEmail'">Verify Email</div>
+                        }
                         <div class="item" onclick="location.href='/account/logout'">Logout</div>
                     </div>
                 </a>
@@ -27,3 +31,17 @@
         }
     </div>
 </div>
+@if ((User.Identity.IsAuthenticated) && (!User.IsEmailConfirmed()))
+{
+    <div class="ui container">
+        <div class="ui icon warning message">
+            <i class="mail icon"></i>
+            <div class="content">
+                <div class="header">
+                    Confirm your Email Address? (@User.Identity.Name)
+                </div>
+                <p>Please confirm your Email Address to complete your account registration  <a href="/Account/VerifyEmail" class="ui small button basic blue">Confirm Now</a></p>
+            </div>
+        </div>
+    </div>
+}
