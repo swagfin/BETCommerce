@@ -39,6 +39,10 @@ namespace BetCommerce.Services.Implementations
         {
             return await _db.UserAccounts.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(userAccountId));
         }
+        public async Task<UserAccount> GetByEmailAsync(string emailAddress)
+        {
+            return await _db.UserAccounts.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.EmailAddress.Equals(emailAddress));
+        }
         public async Task UpdateAsync(UserAccount userAccount)
         {
             _db.UserAccounts.Update(userAccount);
@@ -85,5 +89,7 @@ namespace BetCommerce.Services.Implementations
             }
             return user;
         }
+
+
     }
 }

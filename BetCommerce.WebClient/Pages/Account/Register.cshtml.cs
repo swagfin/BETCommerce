@@ -64,6 +64,9 @@ namespace BetCommerce.WebClient.Pages.Account
                     };
                     //Sign In User
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(principal), authProperties);
+                    //Check Account if Confirmed
+                    if (!response.Message.IsEmailConfirmed)
+                        return Redirect("/Account/VerifyEmail");
                     return LocalRedirect(returnUrl);
                 }
             }

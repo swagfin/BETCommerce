@@ -13,9 +13,8 @@
     }
     <div class="ui attached tiny message">
         <div class="header">Sign in!</div>
-        <p>Sign to proceed</p>
     </div>
-    <form class="ui small form attached fluid segment" method="post" role="form">
+    <form class="ui small loading form attached fluid segment" method="post" role="form">
         <div class="field" id="userbox">
             <label id="userl">Email Address</label>
             <input placeholder="Enter your Email Address" asp-for="signInRequest.EmailAddress" autocomplete="off" autofocus="" required="">
