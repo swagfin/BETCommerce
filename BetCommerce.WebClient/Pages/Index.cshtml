@@ -1,0 +1,20 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h3 class="ui header blue">Hello There</h3>
+<p><a>BET Commerce</a>. is so far the most creative way to shop anything you want</p>
+
+<div class="ui text container center aligned">
+    <a href="/shop" class="ui button primary" onclick="$(this).addClass('loading')">Start Shopping</a>
+</div>
+
+<div class="ui divider"></div>
+<div class="ui segment">
+    <div class="ui active inverted dimmer">
+        <div class="ui small text loader">Retrieving Products</div>
+    </div>
+    <p></p>
+</div>

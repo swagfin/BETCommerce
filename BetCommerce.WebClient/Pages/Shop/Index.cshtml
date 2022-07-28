@@ -1,0 +1,92 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Shop.IndexModel
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<div class="ui message small icon">
+    <i class="info icon"></i>
+    <div class="content">
+        Welcome to  <a>BET Commerce</a>. is so far the most creative way to shop anything you want
+        .This website is currently under development
+    </div>
+</div>
+<div class="ui divider"></div>
+@{
+    if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
+    {
+        <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
+    }
+}
+<section class="ui two column grid">
+    <div class="three wide column">
+        <div class="ui vertical inverted red menu fluid" style="border-radius:0;">
+            <a class="active item"><i class="home icon"></i>Product Categories</a>
+            @{
+                if (Model.DataCategoriesResponse != null && Model.DataCategoriesResponse.Count > 0)
+                {
+                    foreach (var category in Model.DataCategoriesResponse)
+                    {
+                        <a class="active item" href='@string.Format("/shop/?category={0}", category.CategoryName.UrlEncoded().ToUpper())'><i class="cart icon"></i>@category.CategoryName</a>
+                    }
+                }
+            }
+
+            <div class="header item"></div>
+
+            <a class="active item" href='/cart/'>
+                <i class="cart icon"></i>
+                <span style="margin-right:4px">My Cart</span><span>&#40;</span><span class="shopping-cart-count">0</span><span>&#41;</span>
+            </a>
+        </div>
+
+
+    </div>
+
+    <div class="thirteen wide column">
+        <div class="ui container segment">
+
+            @{
+                if (Model.DataResponse == null || Model.DataResponse.Count == 0)
+                {
+                    <div class="ui tiny warning message"><b>Oops! Looks like we don't have any products for sale at the moment, Please come back later</b></div>
+                }
+                else
+                {
+
+                    <div class="ui four doubling cards">
+
+                        @foreach (var product in Model.DataResponse)
+                        {
+                            <div class="card">
+                                <div class="ui fluid image">
+                                    <div class="ui red right ribbon small label">
+                                        <i class="fire icon"></i> Hot
+                                    </div>
+                                    <img style="max-height:140px" src="@string.Format("{0}/Images/{1}", Model.ServerAPIEndpoint, product.ImageFile)">
+                                </div>
+                                <div class="content">
+                                    <div class="ui small header">@product.ProductName</div>
+                                    <div class="description">
+                                        <span class="ui star rating" data-rating="3"></span><br />
+                                        <span>Ksh. <span style="font-weight:bold;color:red"> @string.Format("{0:N0}", product.SellingPrice)</span></span>
+                                    </div>
+                                </div>
+                                <div class="ui red attached button" onclick="addItemToCart(@product.ProductId,this)">
+                                    <i class="cart icon"></i>
+                                    Add Cart
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                }
+
+            }
+
+
+
+        </div>
+    </div>
+
+</section>

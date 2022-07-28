@@ -1,0 +1,29 @@
+﻿@using BetCommerce.WebClient.Services
+@inject IShoppingCartService cartService
+<div class="ui menu inverted  red fluid" style="border-radius:0;">
+    <a class="active item" href='/'><i class="home icon"></i>Home</a>
+    <a class="active item" href='/shop'><i class="cart icon"></i>Shopping</a>
+    <a class="active item" href='/cart/'>
+        <i class="cart icon"></i>
+        <span style="margin-right:4px">Cart</span><span>&#40;</span><span class="shopping-cart-count">0</span><span>&#41;</span>
+    </a>
+    <div class="right item">
+        @{
+            if (User.Identity.IsAuthenticated)
+            {
+                <a class="ui dropdown" tabindex="0">
+                    <i class="cart icon"></i><span><b>@User.Identity.Name</b></span>
+                    <div class="menu" tabindex="-1">
+                        <div class="item" onclick="location.href='/'">My Account</div>
+                        <div class="item" onclick="location.href='/account/logout'">Logout</div>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <a class="ui inverted button" style="margin-left:4px" href="/Account/login">Log in</a>
+                <a class="ui inverted button" style="margin-left:4px" href="/Account/Register">Register</a>
+            }
+        }
+    </div>
+</div>
