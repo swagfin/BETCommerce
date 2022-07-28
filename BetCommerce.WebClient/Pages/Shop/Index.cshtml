@@ -31,7 +31,16 @@
                     }
                 }
             }
+
+            <div class="header item"></div>
+
+            <a class="active item" href='/cart/'>
+                <i class="cart icon"></i>
+                <span style="margin-right:4px">My Cart</span><span>&#40;</span><span class="shopping-cart-count">0</span><span>&#41;</span>
+            </a>
         </div>
+
+
     </div>
 
     <div class="thirteen wide column">
@@ -81,27 +90,3 @@
     </div>
 
 </section>
-@section Scripts{
-
-    <script type="text/javascript">
-        function addItemToCart(itemId, element) {
-            $(element).addClass("loading");
-            $.ajax({
-                type: "GET",
-                url: "/cart/additem/" + itemId,
-                success: function (msg) {
-                    toastr.success(msg);
-                    $(element).removeClass("loading");
-                },
-                error: function (xhr, status, error) {
-                    console.log(error);
-                    toastr.error("An rrror Occurred while adding item to cart : Error: " + error);
-                },
-                complete: function (data) {
-                    $(element).removeClass("loading");
-                }
-
-            });
-        }
-    </script>
-}

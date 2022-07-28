@@ -11,5 +11,6 @@ namespace BetCommerce.WebClient.Services
         int GetShoppingItemsCount(string sessionId);
         void ReduceItem(string sessionId, int itemId);
         string VerifyCanCheckoutMessage(string sessionId);
+        void RemoveItem(string sessionId, int productId, out OrderItemRequest existItem);
     }
 }

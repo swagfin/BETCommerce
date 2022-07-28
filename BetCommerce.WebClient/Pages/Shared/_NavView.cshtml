@@ -5,9 +5,8 @@
     <a class="active item" href='/shop'><i class="cart icon"></i>Shopping</a>
     <a class="active item" href='/cart/'>
         <i class="cart icon"></i>
-        2
+        <span style="margin-right:4px">Cart</span><span>&#40;</span><span class="shopping-cart-count">0</span><span>&#41;</span>
     </a>
-
     <div class="right item">
         @{
             if (User.Identity.IsAuthenticated)

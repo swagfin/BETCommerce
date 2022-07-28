@@ -13,14 +13,11 @@
 </head>
 <body style="background:#f7f7f7">
     @await Html.PartialAsync("_NavView")
-
     <div class="ui container" style="margin:30px">
         @RenderBody()
     </div>
     @RenderSection("Scripts", required: false)
-    <script type="text/javascript">
-        $('.ui.rating').rating();
-        $('.ui.dropdown').dropdown();
-    </script>
+    <script src="~/js/shop.js"></script>
+    <script src="~/js/init.js"></script>
 </body>
 </html>

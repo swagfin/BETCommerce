@@ -75,6 +75,8 @@ namespace BetCommerce.Services.Implementations
                 }
                 throw new Exception($"Invalid Password Provided, Enter valid Password. Attempts Left ({attemptsLeft}).");
             }
+            else if (!user.IsActive)
+                throw new Exception($"Your account is currently SUSPENDED. Please contact the Administrator to reset your account or try reseting your password");
             else
             {
                 user.InvalidLogins = 0;

@@ -25,7 +25,10 @@ namespace BetCommerce.WebClient.Services.Implementations
         }
         public int GetShoppingItemsCount(string sessionId)
         {
-            return GetShoppingList(sessionId, false).Count;
+            var cart = GetShoppingList(sessionId, false);
+            if (cart == null)
+                return 0;
+            return cart.Sum(x => x.Quantity);
         }
 
         public void AddProduct(string sessionId, OrderItemRequest orderItemRequest, int Quantity = 1)
@@ -57,6 +60,13 @@ namespace BetCommerce.WebClient.Services.Implementations
                 if (existItem.Quantity <= 0)
                     cart.Remove(existItem);
             }
+        }
+        public void RemoveItem(string sessionId, int productId, out OrderItemRequest existItem)
+        {
+            List<OrderItemRequest> cart = GetShoppingList(sessionId, true);
+            existItem = cart.FirstOrDefault(x => x.ProductId.Equals(productId));
+            if (existItem != null)
+                cart.Remove(existItem);
         }
 
         public string VerifyCanCheckoutMessage(string sessionId)
