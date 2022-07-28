@@ -83,7 +83,12 @@ namespace BetCommerce.WebClient.Services.Implementations
                 throw new Exception($"YOUR REQUEST/ACCESS WAS DENIED :-(. This operation requires Higher Level Access Role/Rights. If you continue to see this error, Contact Administrator to assign/elevate your Account.");
             else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 throw new Exception($"UNAUTHORIZED/ SESSION TERMINATED :-(. Your account is currently unauthorized or session has expired. Please Login again to renew your Session.");
-            return $"Server Responded with a {response.StatusCode} Status Code, Reason: {response.ReasonPhrase}. Please Try Again. If you continue to see this message, please Contact your Systems Administrator";
+            var res = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            if (string.IsNullOrWhiteSpace(res))
+                return $"Server Responded with a {response.StatusCode} Status Code, Reason: {response.ReasonPhrase}. Please Try Again. If you continue to see this message, please Contact your Systems Administrator";
+            else
+                return res;
+
         }
         public string GetToken()
         {

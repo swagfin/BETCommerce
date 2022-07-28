@@ -1,0 +1,41 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="ui text container" style="margin-top:20px;margin-bottom:80px">
+
+    @{
+        if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
+        {
+            <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
+        }
+    }
+    <div class="ui attached tiny message">
+        <div class="header">Register Account</div>
+    </div>
+    <form class="ui small form attached fluid segment" method="post" role="form">
+        <div class="field" id="userbox">
+            <label id="userl">Email Address</label>
+            <input placeholder="Enter your Email Address" asp-for="signUpRequest.EmailAddress" autocomplete="off" autofocus="" required="">
+        </div>
+        <div class="two fields">
+
+            <div class="field" id="pswbox">
+                <label id="passl">Password</label>
+                <input type="password" placeholder="xxxxxxxxx" asp-for="signUpRequest.Password" autocomplete="off" required="">
+            </div>
+            <div class="field" id="pswboxConfirm">
+                <label id="pswboxConfirmLabel">Confirm Password</label>
+                <input type="password" placeholder="xxxxxxxxx" asp-for="signUpRequest.ConfirmPassword" autocomplete="off" required="">
+            </div>
+        </div>
+        <div style="text-align:center">
+            <button class="ui labeled icon button pink" id="submitbtn"><i class="user add icon"></i>Register Account</button>
+        </div>
+    </form>
+
+    <div class="ui bottom attached tiny orange message">
+        <i class="icon help"></i> Already have an account? <a href="/account/login/">Sign in instead</a>.<br>
+    </div>
+</div>

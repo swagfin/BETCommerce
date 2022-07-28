@@ -60,7 +60,7 @@ namespace BetCommerce.API.Controllers.api
         }
         [AllowAnonymous]
         [HttpPost("SignUp")]
-        public async Task<Response<UserIdentityResponse>> PostSignUp([FromBody] UserIdentityRequest userIdentityRequest)
+        public async Task<Response<UserIdentityResponse>> PostSignUp([FromBody] SignUpRequest userIdentityRequest)
         {
             try
             {
@@ -94,10 +94,12 @@ namespace BetCommerce.API.Controllers.api
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.EmailAddress),
-                new Claim(ClaimTypes.Name, user.FullName ?? string.Empty),
-                new Claim(ClaimTypes.Email, user.EmailAddress),
+                new Claim(ClaimTypes.Name, user.EmailAddress ?? string.Empty),
+                new Claim(ClaimTypes.GivenName, user.FullName ?? string.Empty),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.MobilePhone, user.MobilePhone),
+                new Claim(nameof(user.IsEmailConfirmed), user.IsEmailConfirmed.ToString()),
+                new Claim(nameof(user.ProfileImage), user.ProfileImage.ToString()),
             };
             //Skipping Adding User Group Roles
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("JWTAuth:EncryptKey")));

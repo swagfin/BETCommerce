@@ -14,7 +14,7 @@ namespace BetCommerce.API.MappingProfiles
             CreateMap<OrderRequest, Order>();
             CreateMap<OrderItemRequest, OrderItem>();
             CreateMap<UserAccount, UserIdentityResponse>();
-            CreateMap<UserIdentityRequest, UserAccount>();
+            CreateMap<SignUpRequest, UserAccount>();
         }
     }
 }

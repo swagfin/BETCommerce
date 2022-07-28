@@ -14,16 +14,16 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace BetCommerce.WebClient.Pages.Account.Login
+namespace BetCommerce.WebClient.Pages.Account
 {
-    public class LoginModel : PageModel
+    public class RegisterModel : PageModel
     {
         private readonly IHttpService _httpService;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly ILogger<RegisterModel> _logger;
 
         [BindProperty]
-        public SignInRequest signInRequest { get; set; }
-        public LoginModel(IHttpService httpService, ILogger<LoginModel> logger)
+        public SignUpRequest signUpRequest { get; set; }
+        public RegisterModel(IHttpService httpService, ILogger<RegisterModel> logger)
         {
             this._httpService = httpService;
             this._logger = logger;
@@ -39,16 +39,15 @@ namespace BetCommerce.WebClient.Pages.Account.Login
             try
             {
                 returnUrl = returnUrl ?? Url.Content("~/");
-                if (string.IsNullOrWhiteSpace(signInRequest.EmailAddress))
-                    ErrorResponse = "Email/Username is required to Login";
-                else if (string.IsNullOrWhiteSpace(signInRequest.Password))
-                    ErrorResponse = "Password is required to Login";
+                if (string.IsNullOrWhiteSpace(signUpRequest.EmailAddress))
+                    ErrorResponse = "Email/Username is required to register an account";
+                else if (string.IsNullOrWhiteSpace(signUpRequest.Password))
+                    ErrorResponse = "Password is required to register an account";
                 else
                 {
-
-                    Response<UserIdentityResponse> response = await _httpService.PostAsync<Response<UserIdentityResponse>>("api/identity/signin", signInRequest);
+                    Response<UserIdentityResponse> response = await _httpService.PostAsync<Response<UserIdentityResponse>>("api/identity/signup", signUpRequest);
                     if (!response.IsSucess || string.IsNullOrWhiteSpace(response.Message.JwtTokenKey))
-                        throw new Exception($"Authentication Failed, {response.ResponseBody}");
+                        throw new Exception($"Account registration failed, {response.ResponseBody}");
                     //Proceeed
                     JwtSecurityToken jwttoken = new JwtSecurityTokenHandler().ReadJwtToken(response.Message.JwtTokenKey);
                     List<Claim> claims = jwttoken.Claims.ToList();

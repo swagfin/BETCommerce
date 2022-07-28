@@ -5,18 +5,17 @@
 }
 <div class="ui text container" style="margin-top:20px;margin-bottom:80px">
 
-    <div class="ui attached message">
-        <div class="header">Sign in!</div>
-        <p>Sign to proceed</p>
-    </div>
     @{
         if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
         {
             <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
         }
     }
-
-    <form class="ui form attached fluid segment" method="post" role="form">
+    <div class="ui attached tiny message">
+        <div class="header">Sign in!</div>
+        <p>Sign to proceed</p>
+    </div>
+    <form class="ui small form attached fluid segment" method="post" role="form">
         <div class="field" id="userbox">
             <label id="userl">Email Address</label>
             <input placeholder="Enter your Email Address" asp-for="signInRequest.EmailAddress" autocomplete="off" autofocus="" required="">
@@ -33,8 +32,8 @@
         </div>
     </form>
 
-    <div class="ui bottom attached orange message">
-        <i class="icon help"></i> Don't have an account? <a href="../register/">Sign up</a>.<br>
+    <div class="ui bottom attached orange tiny message">
+        <i class="icon help"></i> Don't have an account? <a href="/account/register/">Register Account</a>.<br>
         <i class="icon help"></i> Forgotten password? <a href="reset">Password recovery</a>.
     </div>
 </div>

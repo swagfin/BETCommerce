@@ -18,4 +18,10 @@
     <ProjectReference Include="..\BetCommerce.Entity.Core\BetCommerce.Entity.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Pages\Account\Login - Copy.cshtml.cs">
+      <DependentUpon>Login.cshtml.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
