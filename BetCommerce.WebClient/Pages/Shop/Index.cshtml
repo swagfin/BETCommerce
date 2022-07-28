@@ -59,17 +59,17 @@
                         @foreach (var product in Model.DataResponse)
                         {
                             <div class="card">
-                                <div class="image">
+                                <div class="ui fluid image">
+                                    <div class="ui red right ribbon small label">
+                                        <i class="fire icon"></i> Hot
+                                    </div>
                                     <img style="max-height:140px" src="@string.Format("{0}/Images/{1}", Model.ServerAPIEndpoint, product.ImageFile)">
                                 </div>
                                 <div class="content">
                                     <div class="ui small header">@product.ProductName</div>
                                     <div class="description">
                                         <span class="ui star rating" data-rating="3"></span><br />
-                                        <span style="font-weight:bold">@string.Format("{0:N0}", product.SellingPrice)</span>
-                                    </div>
-                                    <div class="meta">
-                                        <span class="meta">@string.Format("{0:N0} remaining", product.CurrentQuantity)</span>
+                                        <span>Ksh. <span style="font-weight:bold;color:red"> @string.Format("{0:N0}", product.SellingPrice)</span></span>
                                     </div>
                                 </div>
                                 <div class="ui red attached button" onclick="addItemToCart(@product.ProductId,this)">

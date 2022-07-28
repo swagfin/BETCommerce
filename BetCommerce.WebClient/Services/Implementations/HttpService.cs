@@ -94,7 +94,7 @@ namespace BetCommerce.WebClient.Services.Implementations
         {
             var user = _httpContextAccessor?.HttpContext?.User;
             if (user == null) return null;
-            var token = user.Claims.FirstOrDefault(x => x.Type == "semantic-backup-token");
+            var token = user.Claims.FirstOrDefault(x => x.Type == "betcommerce-token");
             return token?.Value;
         }
     }

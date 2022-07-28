@@ -1,0 +1,60 @@
+﻿@page
+@model BetCommerce.WebClient.Pages.Cart.CheckoutModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+<div class="ui  container">
+    <div class="ui divider"></div>
+    @{
+        if (!string.IsNullOrWhiteSpace(Model.ErrorResponse))
+        {
+            <div class="ui tiny negative message"><b>@(Model.ErrorResponse)</b></div>
+        }
+        else
+        {
+            <div class="ui icon large message order-processing-section">
+                <i class="notched circle loading icon"></i>
+                <div class="content">
+                    <div class="header">
+                        Hold on tight, we are completing your Order
+                    </div>
+                    <p>This should only take a few seconds. If this message persists please refresh/reload your browser</p>
+                </div>
+            </div>
+
+            if (Model.LastTransactionNo > 0)
+            {
+                <section class="order-completed-section" hidden>
+                    <div class="ui icon info large message">
+                        <i class="inbox icon"></i>
+                        <div class="content">
+                            <div class="header">
+                                Order No: @string.Format("{0:N0}", Model.LastTransactionNo) was completed successfully!
+                            </div>
+                            <p>We have successfully received your order. Your Order Reference No: <b> @string.Format("{0:N0}", Model.LastTransactionNo)</b> you can always monitor your order in the <a href="/">My Orders Area</a></p>
+                        </div>
+                    </div>
+
+                    <div class="ui text container center aligned">
+                        <div class="ui buttons">
+                            <a class="ui button" href="/">My Orders</a>
+                            <div class="or"></div>
+                            <a class="ui positive button" href="/Shop">Continue Shopping</a>
+                        </div>
+                    </div>
+                </section>
+            }
+        }
+
+
+    }
+</div>
+@section Scripts{
+    @if (Model.LastTransactionNo > 0)
+    {
+        <script type="text/javascript">
+            $(".order-processing-section").show();
+            setTimeout(function () { $(".order-completed-section").show(); $(".order-processing-section").hide(); }, 3000);
+        </script>
+    }
+}
