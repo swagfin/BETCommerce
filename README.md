@@ -18,7 +18,18 @@ docker pull swagfin/betcommerceapi
 docker pull swagfin/betcommercewebclient
 
 ```
-    
+ 
+ ### Local Environment Setup
+-  Open project BETCommerce/BETCommerce.sln
+-  *Database* 
+   -  The Entity Framework will Automatically generate a database migration for you (save the hussle)
+-  *Web Api & Server Application*
+   -  Right click solution and set startup projects to BetCommerce.API and BetCommerce.WebClient
+   -  Build and Run Project through Visual Studio/Terminal
+   -  To Access API - https://localhost:5001/swagger/index.html
+   -  To Access WebClient - https://localhost:6001/
+   -  There may be demo data products and categories to interact with
+   
 ### Bugs / Feature Request
 This application is still under development and may not be production ready but if you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/swagfin/BETCommerce/issues/new) by including your search query and the expected result.
 If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/swagfin/BETCommerce/issues/new). Please include sample queries and their corresponding results.
@@ -27,8 +38,6 @@ If you'd like to request a new function, feel free to do so by opening an issue 
 There is some few features in Milestone;
 - Admin/Superuser Portal for performing crud operations.
 - Completing Multi-Timezone Support.
-- Another WebApp, capable of comparing at least 10 stocks.
-
 
 # Lisence
 This project's license is in review.
