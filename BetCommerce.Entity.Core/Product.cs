@@ -23,6 +23,7 @@ namespace BetCommerce.Entity.Core
         public string ImageFile { get; set; } = "no_image.png";
         [DataType(DataType.DateTime)]
         public DateTime RegisteredDateUtc { get; set; } = DateTime.UtcNow;
+        public bool IsFeatured { get; set; } = false;
         public bool IsActive { get; set; } = true;
     }
 }

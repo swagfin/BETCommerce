@@ -7,7 +7,9 @@ namespace BetCommerce.DataAccess
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+            Database.Migrate(); //Remove on Run
         }
+
         //********  ENTITIES *********
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }

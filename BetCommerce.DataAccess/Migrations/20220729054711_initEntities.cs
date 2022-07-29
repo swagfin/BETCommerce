@@ -35,6 +35,7 @@ namespace BetCommerce.DataAccess.Migrations
                     SellingPrice = table.Column<double>(nullable: false),
                     ImageFile = table.Column<string>(type: "text", nullable: true),
                     RegisteredDateUtc = table.Column<DateTime>(nullable: false),
+                    IsFeatured = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
