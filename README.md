@@ -19,7 +19,7 @@ docker pull swagfin/betcommercewebclient
 
 ```
  
- ### Local Environment Setup
+ ### Local Environment Run/Testing
 -  Open project BETCommerce/BETCommerce.sln
 -  *Database* 
    -  The Entity Framework will Automatically generate a database migration for you (save the hussle)
@@ -29,6 +29,10 @@ docker pull swagfin/betcommercewebclient
    -  To Access API - https://localhost:5001/swagger/index.html
    -  To Access WebClient - https://localhost:6001/
    -  There may be demo data products and categories to interact with
+-  *Email Templates Customization*
+    - You can customize the Email Templates that are sent to users e.g. Email Verificatio,Reset etc
+    - Navigate to the Folder inside BetCommerce.API/EmailTemplates and find all supported list of templates
+    - You can view samples of all [Default Email Templates](https://github.com/swagfin/BETCommerce/tree/master/BetCommerce.API/EmailTemplates)
    
 ### Bugs / Feature Request
 This application is still under development and may not be production ready but if you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/swagfin/BETCommerce/issues/new) by including your search query and the expected result.
