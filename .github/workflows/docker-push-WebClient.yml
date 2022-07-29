@@ -2,7 +2,7 @@ name: Docker Publish For BetCommerce.WebClient
 
 on:
   workflow_run:
-    workflows: [.NET Build on Master Commits]
+    workflows: [Docker Publish For BetCommerce.API]
     types:
       - completed
     
