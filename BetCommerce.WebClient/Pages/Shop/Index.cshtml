@@ -58,11 +58,16 @@
 
                         @foreach (var product in Model.DataResponse)
                         {
+
+
                             <div class="card">
                                 <div class="ui fluid image">
-                                    <div class="ui red right ribbon small label">
-                                        <i class="fire icon"></i> Hot
-                                    </div>
+                                    @if (product.IsFeatured)
+                                    {
+                                        <div class="ui red right ribbon small label">
+                                            <i class="fire icon"></i> Hot
+                                        </div>
+                                    }
                                     <img style="max-height:140px" src="@string.Format("{0}/Images/{1}", Model.ServerAPIEndpoint, product.ImageFile)">
                                 </div>
                                 <div class="content">
