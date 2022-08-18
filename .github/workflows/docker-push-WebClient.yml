@@ -17,7 +17,7 @@ jobs:
     - name: docker login
       run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build the Docker Image
-      run: docker build . --file BetCommerce.WebClient/Dockerfile --tag ${{secrets.DOCKER_USER}}/betcommerceapi:latest
+      run: docker build . --file BetCommerce.WebClient/Dockerfile --tag ${{secrets.DOCKER_USER}}/betcommercewebclient:latest
     - name: Docker Push
       run: docker push ${{secrets.DOCKER_USER}}/betcommercewebclient:latest
       
@@ -30,6 +30,6 @@ jobs:
     - name: docker login
       run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build the Docker Image
-      run: docker build . --file BetCommerce.WebClient/Dockerfile --tag ${{secrets.DOCKER_USER}}/betcommerceapi:latest-windows
+      run: docker build . --file BetCommerce.WebClient/Dockerfile --tag ${{secrets.DOCKER_USER}}/betcommercewebclient:latest-windows
     - name: Docker Push
       run: docker push ${{secrets.DOCKER_USER}}/betcommercewebclient:latest-windows
