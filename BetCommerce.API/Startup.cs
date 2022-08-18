@@ -15,8 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ObjectSemantics.NET;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BetCommerce.API
@@ -65,17 +67,6 @@ namespace BetCommerce.API
                      ClockSkew = TimeSpan.Zero
                  };
              });
-
-            services.AddCors(opt =>
-            {
-                opt.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyMethod();
-                    builder.SetIsOriginAllowed((x) => true);
-                    builder.AllowCredentials();
-                });
-            });
 
             // Auto Mapper Configurations
             MapperConfiguration mapperConfig = new MapperConfiguration(mc =>
@@ -127,6 +118,13 @@ namespace BetCommerce.API
                 });
             });
 
+            //My Own Lib saves me all the time
+            services.AddObjectSemantics(new ObjectSemanticsOptions
+            {
+                TemplatesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates"),
+                SupportedTemplateFileExtensions = new[] { ".html" },
+                CreateTemplatesDirectoryIfNotExist = true
+            });
             services.AddControllers();
         }
 

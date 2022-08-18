@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ REPORT_TITLE }}</title>
+    <style type="text/css">
+        .header-orange-red {
+            color: #FF4500;
+            font-weight: bold;
+        }
+
+        .header-green {
+            color: green;
+        }
+
+        .header-darksea-green {
+            color: #8FBC8F;
+        }
+
+        .header-dim-gray {
+            color: #666;
+        }
+
+        .header-teal {
+            color: teal;
+        }
+
+        .header-dark-red {
+            color: darkred;
+        }
+
+        .header-indian-red {
+            color: indianred;
+        }
+
+        .header-dark-olive-green {
+            color: darkolivegreen;
+        }
+
+        .header-red {
+            color: red;
+        }
+
+        .header-bold {
+            font-weight: bold;
+        }
+
+        .header-demi-bold {
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            font-family: Arial;
+            border-collapse: collapse;
+            padding: 5px;
+            float: right;
+            font-size: 12px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <address>{{COMPANY_NAME}}</address>
+    <p style="font-size:17px;font-weight:bold" align="center">{{ REPORT_TITLE }}</p>
+    <hr />
+    <hr />
+    <p>Order Transaction details</p>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">ITEM</th>
+                <th>ITEM CODE</th>
+                <th>RATE</th>
+                <th>QTY</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ for-each-start:Records  }}
+            <tr>
+                <td colspan="2" class="header-bold header-green">{{ ItemName }}</td>
+                <td class="header-demi-bold">{{ ItemBarcode }}</td>
+                <td class="header-demi-bold header-teal">{{ Rate:N2 }}</td>
+                <td class="header-demi-bold header-dark-red">{{ Quantity }}</td>
+                <td class="header-demi-bold header-red">{{ TotalCost:N2 }}</td>
+            </tr>
+            {{ for-each-end:Records }}
+            <tr>
+                <td colspan="5"></td>
+                <td class="header-bold header-red">{{TotalCostSum:N2}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <p style="font-size:14px;margin:50px;margin-top:90px; padding:10px;padding-top:70px; color:#666" align="center">Thank you for shopping with us, BET Commerce all the way. For sales support contact us at support@betcommerce.com</p>
+
+</body>
+</html>

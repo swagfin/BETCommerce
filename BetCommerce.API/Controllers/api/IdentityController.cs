@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BetCommerce.API.Extensions;
 using BetCommerce.API.Services;
 using BetCommerce.Entity.Core;
 using BetCommerce.Entity.Core.Requests;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using ObjectSemantics.NET;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -30,17 +30,28 @@ namespace BetCommerce.API.Controllers.api
         private readonly EmailDispatcherBackgroundJob _emailDispatcherBackgroundJob;
         private readonly IUserAccountService _userAccountService;
         private readonly IMapper _mapper;
+        private readonly IObjectSemantics _objectSemantics;
+
         public string AppBaseUrl { get { return $"{Current.Request.Scheme}://{Current.Request.Host}{Current.Request.PathBase}"; } }
         public HttpContext Current { get; }
         public IConfiguration Configuration { get; }
 
-        public IdentityController(ILogger<IdentityController> logger, EmailDispatcherBackgroundJob emailDispatcherBackgroundJob, IUserAccountService userAccountService, IConfiguration configuration, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public IdentityController(
+            ILogger<IdentityController> logger,
+            EmailDispatcherBackgroundJob emailDispatcherBackgroundJob,
+            IUserAccountService userAccountService,
+            IConfiguration configuration,
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor,
+            IObjectSemantics objectSemantics
+            )
         {
             this._logger = logger;
             this._emailDispatcherBackgroundJob = emailDispatcherBackgroundJob;
             this._userAccountService = userAccountService;
             Configuration = configuration;
             this._mapper = mapper;
+            this._objectSemantics = objectSemantics;
             this.Current = httpContextAccessor.HttpContext;
         }
 
@@ -185,7 +196,13 @@ namespace BetCommerce.API.Controllers.api
         {
             if (!model.IsEmailConfirmed)
             {
-                string templateBody = model.GetEmailConfirmationHTMLTemplate(AppBaseUrl);
+                //Optional Headers that outside the Model space
+                List<ObjectSemanticsKeyValue> headers = new List<ObjectSemanticsKeyValue>
+                  {
+                       new ObjectSemanticsKeyValue{ Key ="COMPANY_NAME",  Value= "BET COMMERCE" }
+                  };
+                //using Object Semantics 
+                string templateBody = _objectSemantics.GenerateTemplate(model, "confirm-email.html", headers);
                 if (!string.IsNullOrWhiteSpace(templateBody))
                     return _emailDispatcherBackgroundJob.QueueRequest(new EmailDispatchQueue
                     {
