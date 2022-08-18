@@ -66,8 +66,13 @@
 </head>
 <body>
     <address>{{COMPANY_NAME}}</address>
-    <p style="font-size:17px;font-weight:bold" align="center">{{ REPORT_TITLE }}</p>
+    <p style="font-size:17px;font-weight:bold" align="center"> Order No: {{ Id }} placed Successfully</p>
     <hr />
+    <ul>
+        <li>Order Ref: <b>{{OrderRef}}</b></li>
+        <li>Order Items: <b>{{TotalItems:N0}}</b></li>
+        <li>Order Amount: <span class="header-red"><b>{{DueAmount:N2}}</b></span></li>
+    </ul>
     <hr />
     <p>Order Transaction details</p>
     <table>
@@ -81,19 +86,15 @@
             </tr>
         </thead>
         <tbody>
-            {{ for-each-start:Records  }}
+            {{ for-each-start:OrderItems  }}
             <tr>
-                <td colspan="2" class="header-bold header-green">{{ ItemName }}</td>
-                <td class="header-demi-bold">{{ ItemBarcode }}</td>
+                <td colspan="2" class="header-bold header-green">{{ ProductName }}</td>
+                <td class="header-demi-bold">{{ ProductBarcode }}</td>
                 <td class="header-demi-bold header-teal">{{ Rate:N2 }}</td>
-                <td class="header-demi-bold header-dark-red">{{ Quantity }}</td>
+                <td class="header-demi-bold header-dark-red">{{ Quantity:N0 }}</td>
                 <td class="header-demi-bold header-red">{{ TotalCost:N2 }}</td>
             </tr>
-            {{ for-each-end:Records }}
-            <tr>
-                <td colspan="5"></td>
-                <td class="header-bold header-red">{{TotalCostSum:N2}}</td>
-            </tr>
+            {{ for-each-end:OrderItems }}
         </tbody>
     </table>
 

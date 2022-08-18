@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using BetCommerce.API.Services;
 using BetCommerce.Entity.Core;
 using BetCommerce.Entity.Core.Requests;
 using BetCommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ObjectSemantics.NET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +22,16 @@ namespace BetCommerce.API.Controllers.api
         private readonly ILogger<OrdersController> _logger;
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
+        private readonly IObjectSemantics _objectSemantics;
+        private readonly EmailDispatcherBackgroundJob _emailDispatcherBackgroundJob;
 
-        public OrdersController(ILogger<OrdersController> logger, IOrderService orderService, IMapper mapper)
+        public OrdersController(ILogger<OrdersController> logger, IOrderService orderService, IMapper mapper, IObjectSemantics objectSemantics, EmailDispatcherBackgroundJob emailDispatcherBackgroundJob)
         {
             this._logger = logger;
             this._orderService = orderService;
             this._mapper = mapper;
+            this._objectSemantics = objectSemantics;
+            this._emailDispatcherBackgroundJob = emailDispatcherBackgroundJob;
         }
 
 
@@ -68,7 +74,13 @@ namespace BetCommerce.API.Controllers.api
                 if (!ModelState.IsValid)
                     throw new Exception(string.Join(Environment.NewLine, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage)));
                 Order model = _mapper.Map<Order>(orderRequest);
+                //Current User Id
+                model.UserAccountId = User.GetUserId();
+                model.CustomerName = User.GetUserFullName();
+                model.CustomerEmail = User.Identity.Name;
                 await _orderService.AddAsync(model);
+                //Queue for Order Dispatch
+                SendOrderConfirmationEmail(model);
                 return new Response<int>(model.Id);
             }
             catch (Exception ex)
@@ -126,6 +138,32 @@ namespace BetCommerce.API.Controllers.api
                 _logger.LogError(ex.Message);
                 return new Response<bool>(false, false, ex.Message);
             }
+        }
+
+        private Guid SendOrderConfirmationEmail(Order model)
+        {
+            if (string.IsNullOrWhiteSpace(model.CustomerEmail))
+            {
+                _logger.LogWarning("Skipping Sending Order Confirmation Email, Reason: Email is Empty");
+                return Guid.Empty;
+            }
+            //Optional Headers that outside the Model space
+            List<ObjectSemanticsKeyValue> headers = new List<ObjectSemanticsKeyValue>
+                  {
+                       new ObjectSemanticsKeyValue{ Key ="COMPANY_NAME",  Value= "BET COMMERCE" }
+                  };
+            //using Object Semantics 
+            string templateBody = _objectSemantics.GenerateTemplate(model, "transaction-details.html", headers);
+            if (!string.IsNullOrWhiteSpace(templateBody))
+                return _emailDispatcherBackgroundJob.QueueRequest(new EmailDispatchQueue
+                {
+                    Subject = "BET E-COMMERCE | ORDER CONFIRMATION",
+                    Body = templateBody,
+                    Destinations = new List<string> { model.CustomerEmail },
+                    IsBodyHtml = true,
+                });
+
+            return Guid.Empty;
         }
     }
 }

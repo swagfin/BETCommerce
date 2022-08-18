@@ -10,8 +10,9 @@ namespace BetCommerce.Entity.Core
         public int Id { get; set; }
         [StringLength(250)]
         public string OrderRef { get; set; }
-        public int? UserAccountId { get; set; }
-        public string UserAccountName { get; set; }
+        public string UserAccountId { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
         public int TotalItems { get; set; } = 0;
         public double SubTotal { get; set; } = 0;
         public double Tax { get; set; } = 0;
