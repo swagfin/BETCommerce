@@ -1,6 +1,7 @@
 # BET E-Commerce App
 A simple E-Commerce application demonstrating .NET Capabilities with Clean code architecture
 # ![WebApp](https://github.com/swagfin/BETCommerce/blob/da22d78db5caf6917bf8a37c4dc90b073a2c8e6b/BetCommerce.WebClient/Screenshots/shop.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fswagfin%2FBETCommerce.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fswagfin%2FBETCommerce?ref=badge_shield)
 
 ### Deploying to Docker Containers
 
@@ -47,3 +48,7 @@ There is some few features in Milestone;
 This project's license is in review.
 # Contact
 George Wainaina georgewainaina18@gmail.com
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fswagfin%2FBETCommerce.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fswagfin%2FBETCommerce?ref=badge_large)
